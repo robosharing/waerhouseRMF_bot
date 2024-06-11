@@ -1,0 +1,22 @@
+name: build
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  build_and_test:
+    name: rmf_obstacle_detectors
+    uses: open-rmf/rmf_ci_templates/.github/workflows/reusable_build.yaml@main
+    with:
+      dist-matrix: |
+          [{"ros_distribution": "iron",
+            "ubuntu_distribution": "jammy"},
+          {"ros_distribution": "rolling",
+            "ubuntu_distribution": "noble"}]
+      # NOTE: Avoid adding comments in the package lines, this can break some of the called scripts in github actions
+      packages: |
+        rmf_human_detector
+        rmf_human_detector_oakd
+        rmf_obstacle_detector_laserscan
